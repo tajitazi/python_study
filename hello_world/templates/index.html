@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  </head>
+  <body>
+    <h1>This is test page</h1>
+    <p>{{test_text}}</p>  <!--  Djangoのテンプレート変数 -->
+    <hr>
+    <div id="counter">
+      Counter: [[ counter ]]  <!-- delimiterで"[[ ]]"を使えるようにしています -->
+    </div>
+   
+    <script>
+      const Counter = {
+        data() {
+          return {
+            counter: 0
+          }
+        },
+        mounted() {
+          setInterval(() => {
+            this.counter++
+          }, 1000)
+        },
+        delimiters: ['[[', ']]']
+      }
+   
+      Vue.createApp(
+        Counter
+      ).mount('#counter')
+    </script>
+  </body>
+</html>
