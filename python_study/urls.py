@@ -21,9 +21,12 @@ Including another URLconf
 #]
 
 from django.conf.urls import include, url
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib import admin
 
 urlpatterns = [
     url(r'^hello_world/', include('hello_world.urls')),
-    url(r'^admin/', admin.site.urls),
+    url('admin/', admin.site.urls),
+    url('appli1/', include('appli1.urls')),
 ]
