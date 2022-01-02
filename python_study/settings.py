@@ -134,6 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if DEBUG:
     INSTALLED_APPS += ['corsheaders']
     MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
+    # Vue.jsからの接続は許可
     CORS_ORIGIN_WHITELIST = (
         'http://127.0.0.1:8080',
         'http://localhost:8080',

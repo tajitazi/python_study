@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    // 記事一覧の取得
     import {mapGetters, mapActions} from 'vuex'
     import {UPDATE_POSTS} from "../store/mutation-types";
 
@@ -23,6 +24,7 @@
         methods: {
           ...mapActions([UPDATE_POSTS])
         },
+        // createdは、インスタンスが生成された後に呼び出される
         created() {
             this.$http(this.$httpPosts)
                 .then(response => {
