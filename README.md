@@ -3,6 +3,6 @@
 バックエンド・・・django
 
 # djangoのバージョン
-# python -m django --version
+python -m django --version
 3.2.9
 
