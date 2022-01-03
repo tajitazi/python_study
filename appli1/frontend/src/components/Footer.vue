@@ -2,10 +2,9 @@
     <footer>
         <p>Copyright 2021 Hiroto Tajiri.</p>
         <ul>
-            <li><a href="https://twitter.com/toritoritorina">Twitter</a></li>
-            <li><a href="mailto:toritoritorina@gmail.com">Mail</a></li>
-            <li><a href="https://www.amazon.co.jp/hz/wishlist/ls/2ZCE9KHVM7FRA?&sort=default">WishList</a></li>
-            <li><a href="https://github.com/naritotakizawa/django-narito-blog3">Github</a></li>
+            <li><a href="https://twitter.com/">Twitter</a></li>
+            <li><a href="tajitazi.1004@gmail.com">Mail</a></li>
+            <li><a href="https://github.com/tajitazi/python_study">Github</a></li>
         </ul>
     </footer>
 </template>

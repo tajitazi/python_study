@@ -30,3 +30,9 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url('appli1/', include('appli1.urls')),
 ]
+
+# 開発環境でのメディアファイルの配信設定
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)

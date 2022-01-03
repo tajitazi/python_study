@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    // Header、Footerコンポーネントを使うための準備
     import Header from "./components/Header"
     import Footer from "./components/Footer"
 
