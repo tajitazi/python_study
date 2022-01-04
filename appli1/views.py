@@ -4,7 +4,7 @@ from .serializers import CategorySerializer, PostSerializer, SimplePostSerialize
 
 # ページネーションクラス
 class StandardResultsSetPagination(pagination.PageNumberPagination):
-    page_size = 2
+    page_size = 1
 
     def get_paginated_response(self, data):
         return response.Response({
