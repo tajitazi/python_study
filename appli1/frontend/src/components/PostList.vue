@@ -4,7 +4,7 @@
         <section>
             <router-link :to="{name: 'detail', params: {id: post.id}}" v-for="post of postList" :key="post.id"
                          class="post">
-                <article class="post" v-for="post of postList" :key="post.id">
+                <article>
                     <figure>
                         <img :src="post.thumbnail" :alt="post.title" class="thumbnail">
                     </figure>
@@ -16,9 +16,10 @@
         </section>
         <hr class="divider">
         <nav id="page">
-            <a v-if="hasPrevious" @click="getPostPrevious" id="back"><img src="@/assets/back.png"></a>
+            <router-link v-if="hasPrevious" :to="getPostPreviousURL" id="back"><img src="@/assets/back.png">
+            </router-link>
             <span>Page {{postCurrentPageNumber}}</span>
-            <a v-if="hasNext" @click="getPostNext" id="next"><img src="@/assets/next.png"></a>
+            <router-link v-if="hasNext" :to="getPostNextURL" id="next"><img src="@/assets/next.png"></router-link>
         </nav>
     </main>
 </template>
@@ -30,18 +31,57 @@
 
     export default {
         name: 'post-list',
+        watch: {
+            '$route'() {
+                this.getPosts()
+            }
+        },
+        // createdは、インスタンスが生成された後に呼び出される
+        created() {
+            this.getPosts()
+        },  
         computed: {
             // 利用するゲッターを登録
             ...mapGetters([
                 'postList', 'postCount', 'postRangeFirst', 'postRangeLast',
                 'postCurrentPageNumber', 'hasPrevious', 'hasNext', 'getPreviousURL', 'getNextURL'
             ]),
+            // 前ページリンククリック時の処理
+            getPostPreviousURL() {
+                const url = new URL(this.getPreviousURL)
+                const keyword = url.searchParams.get('keyword') || ''
+                const category = url.searchParams.get('category') || ''
+                const page = url.searchParams.get('page') || 1
+                return this.$router.resolve({
+                    name: 'posts',
+                    query: {keyword, category, page}
+                }).route.fullPath
+            },
+            // 次ページリンククリック時の処理
+            getPostNextURL() {
+                const url = new URL(this.getNextURL)
+                const keyword = url.searchParams.get('keyword') || ''
+                const category = url.searchParams.get('category') || ''
+                const page = url.searchParams.get('page')
+                return this.$router.resolve({
+                    name: 'posts',
+                    query: {keyword, category, page}
+                }).route.fullPath
+            }
         },
         methods: {
             ...mapActions([UPDATE_POSTS]),
-            // 前ページリンククリック時の処理
-            getPostPrevious() {
-                this.$http(this.getPreviousURL)
+            getPosts() {
+                // URL直接アクセスでもURLを作成できるようにする
+                let postURL = this.$httpPosts
+                const params = this.$route.query
+                const queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&')
+                if (queryString) {
+                    postURL += '?' + queryString
+                }
+
+                // APIからデータ取得
+                this.$http(postURL)
                     .then(response => {
                         return response.json()
                     })
@@ -49,26 +89,6 @@
                         this[UPDATE_POSTS](data)
                     })
             },
-            // 次ページリンククリック時の処理
-            getPostNext() {
-                this.$http(this.getNextURL)
-                    .then(response => {
-                        return response.json()
-                    })
-                    .then(data => {
-                        this[UPDATE_POSTS](data)
-                    })
-            }
-        },
-        // createdは、インスタンスが生成された後に呼び出される
-        created() {
-            this.$http(this.$httpPosts)
-                .then(response => {
-                    return response.json()
-                })
-                .then(data => {
-                    this[UPDATE_POSTS](data)
-                })
         }
     }
 </script>
