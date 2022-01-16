@@ -5,7 +5,7 @@
         <h1 class="post-title">{{post.title}}</h1>
         <p class="post-lead">{{post.lead_text}}</p>
         <hr class="divider">
-        <div class="post-main">{{ post.main_text }}</div>
+        <div class="post-main" v-html="post.main_text"></div>
         <hr class="divider">
         <nav id="top"><a @click="scrollTop" title="一番上まで戻る"><img src="@/assets/ue.png"></a></nav>
     </article>
@@ -102,11 +102,11 @@
         line-height: 2;
     }
 
-    .post-main p {
+    .post-main >>> p {
         margin-bottom: 4em;
     }
 
-    .post-main img {
+    .post-main >>> img {
         max-width: 100%;
         height: auto;
         box-shadow: 0 0 5px #ccc;
